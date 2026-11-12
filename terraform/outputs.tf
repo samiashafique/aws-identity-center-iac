@@ -1,7 +1,9 @@
-output "arn" {
-  value = tolist(data.aws_ssoadmin_instances.this.arns)[0]
+output "instance_arn" {
+  description = "The ARN of the IAM Identity Center instance"
+  value       = local.instance_arn
 }
 
 output "identity_store_id" {
-  value = tolist(data.aws_ssoadmin_instances.this.identity_store_ids)[0]
+  description = "The ID of the Identity Store used by the IAM Identity Center instance"
+  value       = local.identity_store_id
 }
