@@ -13,20 +13,22 @@ locals {
     Operations = "Engineers who run and maintain the infrastructure"
     Finance    = "Staff who track cloud costs and budgets"
     Analysts   = "Data analysts who query application data"
+    Platform   = "Engineers who administer the AWS accounts"
   }
 
   # Keyed by username. "team" must match a key in teams.
   users = {
-    "maya.smith"    = { first_name = "Maya", last_name = "Smith", team = "Developers" }
-    "daniel.grey"   = { first_name = "Daniel", last_name = "Grey", team = "Developers" }
-    "ali.noor"      = { first_name = "Ali", last_name = "Noor", team = "Developers" }
-    "zoya.ehsan"    = { first_name = "Zoya", last_name = "Ehsan", team = "Developers" }
-    "noah.bennett"  = { first_name = "Noah", last_name = "Bennett", team = "Operations" }
-    "hannah.kim"    = { first_name = "Hannah", last_name = "Kim", team = "Operations" }
-    "omar.farooq"   = { first_name = "Omar", last_name = "Farooq", team = "Finance" }
-    "sofia.alvarez" = { first_name = "Sofia", last_name = "Alvarez", team = "Analysts" }
-    "wei.zhang"     = { first_name = "Wei", last_name = "Zhang", team = "Analysts" }
-    "trevor.white"  = { first_name = "Trevor", last_name = "White", team = "Analysts" }
+    "maya.smith"     = { first_name = "Maya", last_name = "Smith", team = "Developers" }
+    "daniel.grey"    = { first_name = "Daniel", last_name = "Grey", team = "Developers" }
+    "ali.noor"       = { first_name = "Ali", last_name = "Noor", team = "Developers" }
+    "zoya.ehsan"     = { first_name = "Zoya", last_name = "Ehsan", team = "Developers" }
+    "noah.bennett"   = { first_name = "Noah", last_name = "Bennett", team = "Operations" }
+    "hannah.kim"     = { first_name = "Hannah", last_name = "Kim", team = "Operations" }
+    "omar.farooq"    = { first_name = "Omar", last_name = "Farooq", team = "Finance" }
+    "sofia.alvarez"  = { first_name = "Sofia", last_name = "Alvarez", team = "Analysts" }
+    "wei.zhang"      = { first_name = "Wei", last_name = "Zhang", team = "Analysts" }
+    "trevor.white"   = { first_name = "Trevor", last_name = "White", team = "Analysts" }
+    "samia.shafique" = { first_name = "Samia", last_name = "Shafique", team = "Platform" }
   }
 
   analytics_bucket = "analytics-bucket-ss"
