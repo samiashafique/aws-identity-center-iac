@@ -28,6 +28,8 @@ locals {
     "wei.zhang"     = { first_name = "Wei", last_name = "Zhang", team = "Analysts" }
     "trevor.white"  = { first_name = "Trevor", last_name = "White", team = "Analysts" }
   }
+
+  analytics_bucket = "analytics-bucket-ss"
 }
 
 resource "aws_identitystore_group" "teams" {
