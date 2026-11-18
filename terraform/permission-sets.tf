@@ -80,3 +80,41 @@ resource "aws_ssoadmin_managed_policy_attachment" "finance_policies" {
   permission_set_arn = aws_ssoadmin_permission_set.finance_permissions.arn
 }
 
+# Developers
+resource "aws_ssoadmin_permission_set" "development_permissions" {
+  name             = "EC2-AppAssets-LogsRead"
+  description      = "Manage EC2, read and write application asset files, and view CloudWatch logs"
+  instance_arn     = local.instance_arn
+  session_duration = "PT1H"
+}
+
+resource "aws_ssoadmin_managed_policy_attachment" "development_policies" {
+  for_each = toset([
+    "arn:aws:iam::aws:policy/AmazonEC2FullAccess",
+    "arn:aws:iam::aws:policy/CloudWatchLogsReadOnlyAccess",
+  ])
+
+  instance_arn       = local.instance_arn
+  managed_policy_arn = each.value
+  permission_set_arn = aws_ssoadmin_permission_set.development_permissions.arn
+}
+
+data "aws_iam_policy_document" "app_assets" {
+  statement {
+    sid       = "ListAppAssetsBucket"
+    actions   = ["s3:ListBucket"]
+    resources = ["arn:aws:s3:::${local.app_assets_bucket}"]
+  }
+
+  statement {
+    sid       = "ReadWriteAppAssetsObjects"
+    actions   = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
+    resources = ["arn:aws:s3:::${local.app_assets_bucket}/*"]
+  }
+}
+
+resource "aws_ssoadmin_permission_set_inline_policy" "app_assets" {
+  inline_policy      = data.aws_iam_policy_document.app_assets.json
+  instance_arn       = local.instance_arn
+  permission_set_arn = aws_ssoadmin_permission_set.development_permissions.arn
+}

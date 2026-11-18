@@ -45,3 +45,5 @@ resource "aws_ssoadmin_account_assignment" "finance_assignment" {
   target_id   = data.aws_caller_identity.management_account.account_id
   target_type = "AWS_ACCOUNT"
 }
+
+# Developers

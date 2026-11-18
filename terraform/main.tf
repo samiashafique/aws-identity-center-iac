@@ -34,7 +34,8 @@ locals {
     "samia.shafique" = { first_name = "Samia", last_name = "Shafique", team = "Platform" }
   }
 
-  analytics_bucket = "analytics-bucket-ss"
+  analytics_bucket  = "analytics-bucket-ss"
+  app_assets_bucket = "app-assets-bucket-ss"
 }
 
 resource "aws_identitystore_group" "teams" {
