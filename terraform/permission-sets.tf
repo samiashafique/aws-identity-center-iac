@@ -5,6 +5,11 @@ resource "aws_ssoadmin_permission_set" "analytics_permissions" {
   instance_arn     = local.instance_arn
   session_duration = "PT1H"
 }
+# Renamed from "permissions"; keeps the existing permission set instead of replacing it.
+moved {
+  from = aws_ssoadmin_permission_set.permissions
+  to   = aws_ssoadmin_permission_set.analytics_permissions
+}
 
 data "aws_iam_policy_document" "s3_read_only" {
   statement {
@@ -61,8 +66,17 @@ resource "aws_ssoadmin_managed_policy_attachment" "operations_policies" {
   permission_set_arn = aws_ssoadmin_permission_set.operations_permissions.arn
 }
 
-# Renamed from "permissions"; keeps the existing permission set instead of replacing it.
-moved {
-  from = aws_ssoadmin_permission_set.permissions
-  to   = aws_ssoadmin_permission_set.analytics_permissions
+# Finance
+resource "aws_ssoadmin_permission_set" "finance_permissions" {
+  name             = "Billing-Budget-Management"
+  description      = "Manage billing and budgets and use Cost Explorer"
+  instance_arn     = local.instance_arn
+  session_duration = "PT1H"
 }
+
+resource "aws_ssoadmin_managed_policy_attachment" "finance_policies" {
+  instance_arn       = local.instance_arn
+  managed_policy_arn = "arn:aws:iam::aws:policy/job-function/Billing"
+  permission_set_arn = aws_ssoadmin_permission_set.finance_permissions.arn
+}
+

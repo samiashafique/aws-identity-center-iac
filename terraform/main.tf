@@ -1,6 +1,9 @@
 # Identity Center must be enabled manually in the console; Terraform only looks up the existing instance.
 data "aws_ssoadmin_instances" "this" {}
 
+# Terraform runs in the management account, so the caller's account is the management account.
+data "aws_caller_identity" "management_account" {}
+
 locals {
   # An organization has a single Identity Center instance, so the first element is always the one we need.
   instance_arn = tolist(data.aws_ssoadmin_instances.this.arns)[0]
