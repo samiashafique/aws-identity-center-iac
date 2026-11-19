@@ -34,6 +34,15 @@ locals {
     "samia.shafique" = { first_name = "Samia", last_name = "Shafique", team = "Platform" }
   }
 
+  # Assignment map keyed by team name.
+  assignments = {
+    "Developers" = { permission_set_arn = aws_ssoadmin_permission_set.development_permissions.arn, target_id = var.workloads_prod_account_id }
+    "Operations" = { permission_set_arn = aws_ssoadmin_permission_set.operations_permissions.arn, target_id = var.workloads_prod_account_id }
+    "Platform"   = { permission_set_arn = aws_ssoadmin_permission_set.platform_permissions.arn, target_id = var.workloads_prod_account_id }
+    "Analysts"   = { permission_set_arn = aws_ssoadmin_permission_set.analytics_permissions.arn, target_id = var.workloads_prod_account_id }
+    "Finance"    = { permission_set_arn = aws_ssoadmin_permission_set.finance_permissions.arn, target_id = data.aws_caller_identity.management_account.account_id }
+  }
+
   analytics_bucket  = "analytics-bucket-ss"
   app_assets_bucket = "app-assets-bucket-ss"
 }
