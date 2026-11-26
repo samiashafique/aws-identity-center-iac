@@ -31,7 +31,7 @@ The team needed access split by role:
 
 I redesigned access around AWS IAM Identity Center, running in a dedicated org-management account. Each person has a named user in a team group, and each team gets its own custom permission set. Users sign in once to the Identity Center portal and land in the account their team works in: every team works in a separate workloads-prod account except Finance, which is the only team with access to org-management, and only to billing and cost management. Everything is defined and deployed with Terraform.
 
-Alongside the four teams, a **Platform** group administers the accounts with short-lived admin access, so that nobody needs the root user for day-to-day work. Without it, the only way to administer the accounts would be the root user, the very login this project retires. Where the access differs from the list above, the reasons are under [The decisions](#3-the-decisions).
+Alongside the four teams, a **Platform** group administers the accounts with admin sessions that expire after an hour, so that nobody needs the root user for day-to-day work. Without it, the only way to administer the accounts would be the root user, the very login this project retires. Where the access differs from the list above, the reasons are under [The decisions](#3-the-decisions).
 
 | Team | People | Permission set | Account | Access |
 |---|---|---|---|---|
