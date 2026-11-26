@@ -110,12 +110,15 @@ Some parts can't be done in Terraform, or weren't in scope for this build:
 | User onboarding | Users were created without email addresses, so an admin issues each one a one-time password. In production, each user's work email would be added so they can onboard themselves |
 | Test resources only | The two S3 buckets were created with the CLI to test the policies. The application's own infrastructure is out of scope for this repo |
 | Analysts' database access | Not built, because there's no database in the sandbox. In production it would use IAM database authentication to a read replica, with a database user that can only run SELECT |
+| Access is standing, not temporary | Every permission set uses 1-hour sessions, but the access itself doesn't expire: users can start a new session from the access portal at any time, without approval (MFA is required when they sign in to the portal). That includes Platform's admin access |
+| Terraform runs from an IAM user | `terraform apply` ran as an IAM user with long-lived access keys in the management account, because Platform only has access to workloads-prod. There is also no second-person approval for access changes |
 
 Next steps:
 
 | Next | Why |
 |---|---|
-| Run changes through a plan/apply pipeline | My [Terraform portfolio project](https://github.com/samiashafique/terraform-portfolio-project) already has one, with an approval gate before every apply |
+| Run Terraform from a GitHub Actions pipeline with OIDC, administered from a delegated `identity` account | Removes the last long-lived credentials, keeps daily work out of the management account, and requires a second person to approve every access change, as in my [Terraform portfolio project](https://github.com/samiashafique/terraform-portfolio-project) |
+| Make Platform read-only and grant admin through [AWS TEAM](https://docs.aws.amazon.com/singlesignon/latest/userguide/temporary-elevated-access.html) | Admin access would need approval, last a set time and be removed automatically, instead of being available at every sign-in |
 | Alert on root user sign-in | Root should only be used in an emergency, so any sign-in deserves a notification (CloudTrail + EventBridge) |
 | Connect an external identity provider | So joiners and leavers are handled in one place, such as Microsoft Entra ID or Okta |
 | CloudFormation and CDK versions | The same design in AWS's own IaC tools, for comparison with Terraform |
