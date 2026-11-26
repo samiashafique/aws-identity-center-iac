@@ -1,7 +1,7 @@
 # Analysts
 resource "aws_ssoadmin_permission_set" "analytics_permissions" {
   name             = "DataReadOnly"
-  description      = "Provides temporary read-only access to user data for analysis"
+  description      = "Read-only access to the analytics bucket, in 1-hour sessions"
   instance_arn     = local.instance_arn
   session_duration = "PT1H"
 }
@@ -34,7 +34,7 @@ resource "aws_ssoadmin_permission_set_inline_policy" "userdata_analytics" {
 # Platform
 resource "aws_ssoadmin_permission_set" "platform_permissions" {
   name             = "AdminAccess"
-  description      = "Short-lived full administrative access for platform engineers"
+  description      = "Full administrative access for platform engineers, in 1-hour sessions"
   instance_arn     = local.instance_arn
   session_duration = "PT1H"
 }
@@ -48,7 +48,7 @@ resource "aws_ssoadmin_managed_policy_attachment" "platform_admin" {
 # Operations
 resource "aws_ssoadmin_permission_set" "operations_permissions" {
   name             = "EC2-CW-SSM-RDS-Full"
-  description      = "Short-lived full access for operations engineers"
+  description      = "Full access for operations engineers, in 1-hour sessions"
   instance_arn     = local.instance_arn
   session_duration = "PT1H"
 }
